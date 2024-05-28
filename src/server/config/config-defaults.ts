@@ -59,7 +59,7 @@ export default {
     /**
      * Intended profit margin for relaying transactions, across all networks.
      */
-    profitMargin: 0.15, // 15% profit
+    profitMargin: 0.6, // 60% profit
 
     /**
      * Precision for transaction fee ratio calculations.

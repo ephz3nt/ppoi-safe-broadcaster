@@ -4,16 +4,31 @@ const config: FallbackProviderJsonConfig = {
   chainId: 1,
   providers: [
     {
-      provider: 'https://mainnet.infura.io/v3/84842078b09946638c03157f83405213',
+      provider: 'https://ethereum-rpc.publicnode.com',
       priority: 2,
       weight: 2,
-      maxLogsPerBatch: 1, // Supports up to 10, but at 1 ethers handles getLogs differently, and this seems to be more stable.
+      maxLogsPerBatch: 10,
       stallTimeout: 2500,
     },
     {
-      provider: 'https://rpc.ankr.com/eth',
+      provider: 'https://1rpc.io/eth',
       priority: 3,
-      weight: 1,
+      weight: 2,
+    },
+    {
+      provider: 'https://rpc.flashbots.net',
+      priority: 3,
+      weight: 2,
+    },
+    {
+      provider: 'https://eth.merkle.io',
+      priority: 3,
+      weight: 2,
+    },
+    {
+      provider: 'https://eth.llamarpc.com',
+      priority: 3,
+      weight: 2,
     },
     {
       provider: 'https://cloudflare-eth.com/',
