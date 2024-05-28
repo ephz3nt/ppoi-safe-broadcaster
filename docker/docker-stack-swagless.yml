@@ -55,6 +55,10 @@ services:
       LOG_LEVEL: 'debug'
       DEBUG: 'broadcaster*,waku:jsonrpc-api'
       POI_NODE_URL: 'https://poi-lb.us.proxy.railwayapi.xyz'
+    deploy:
+      resources:
+        limits:
+          memory: 3096M
     secrets:
       - MNEMONIC
       - DB_ENCRYPTION_KEY
