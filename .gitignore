@@ -27,7 +27,7 @@ dist
 .ipfsdata/
 run-dev.sh
 start-broadcaster.sh
-src/MY-CONFIG.ts
+# src/MY-CONFIG.ts
 docker/secret
 src/test/test-config-overrides.test.ts
 artifacts-v2.1
@@ -38,7 +38,7 @@ tsconfig.tsbuildinfo
 docker/.env
 docker/config.toml
 docker/docker-stack.yml
-docker/docker-stack-swagless.yml
+# docker/docker-stack-swagless.yml
 docker/appdata
 docker/custom.yml
 docker/UPDATED

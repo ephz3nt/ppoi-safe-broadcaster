@@ -1,0 +1,73 @@
+version: '3.9'
+
+volumes:
+  nwaku1:
+    name: 'nwaku1'
+  nwaku2:
+    name: 'nwaku2'
+  broadcaster:
+    name: 'broadcaster'
+
+services:
+  nwaku1:
+    image: nwaku:latest
+    hostname: 'nwaku1'
+    ports:
+      - '60000:60000'
+      - '9000:9000'
+      - '8000:8000'
+      - '8546:8546'
+    restart: always
+    volumes:
+      - nwaku1:/data
+      - ../scripts/nwaku:/app/scripts
+    entrypoint: >
+      wakunode2 --config-file=/app/config.toml
+      --nat="extip:{IP}"
+      --nodekey={NODEKEY_1}
+      --websocket-support=true
+
+  nwaku2:
+    image: nwaku:latest
+    hostname: 'nwaku2'
+    ports:
+      - '60001:60001' # p2p
+      - '9001:9001' # ENR
+      - '8001:8001' # wss
+      - '8547:8547'
+    volumes:
+      - nwaku2:/data
+      - ../scripts/nwaku:/app/scripts
+    entrypoint: >
+      wakunode2
+        --config-file=/app/config.toml
+        --nat="extip:{IP}"
+        --nodekey={NODEKEY_2}
+        --websocket-support=true
+        --ports-shift=1
+
+  broadcaster:
+    image: broadcaster:latest
+    hostname: 'broadcaster'
+    environment:
+      WAKU_RPC_URL: 'http://nwaku1:8546'
+      LEPTON_DB: '/mnt/broadcaster.db'
+      LOG_LEVEL: 'debug'
+      DEBUG: 'broadcaster*,waku:jsonrpc-api'
+      POI_NODE_URL: 'https://poi-lb.us.proxy.railwayapi.xyz'
+    secrets:
+      - MNEMONIC
+      - DB_ENCRYPTION_KEY
+    depends_on:
+      - nwaku1
+    restart: always
+    tty: true
+    volumes:
+      - broadcaster:/mnt
+    command: sh -c 'npm start'
+
+secrets:
+  MNEMONIC:
+    external: true
+  DB_ENCRYPTION_KEY:
+    external: true
