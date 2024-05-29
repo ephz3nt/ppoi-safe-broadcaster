@@ -58,7 +58,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 3096M
+          memory: 2048M
     secrets:
       - MNEMONIC
       - DB_ENCRYPTION_KEY
